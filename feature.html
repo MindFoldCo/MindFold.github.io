@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features — MindFold</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #FDF8F2; --cream-dark: #F4EDE2; --sand: #E8DDD0;
+      --warm-brown: #7A5C44; --brown-dark: #3D2B1A; --terracotta: #C4613A;
+      --terracotta-light: #EFCFBF; --terracotta-pale: #FAF0EB;
+      --sage: #5A7A5C; --sage-light: #D4E4D5; --sage-pale: #EDF4EE;
+      --text-main: #2A1F14; --text-muted: #7A6655; --text-light: #A8998A;
+      --white: #FFFFFF;
+      --shadow: 0 4px 24px rgba(60,40,20,0.08);
+      --shadow-hover: 0 8px 40px rgba(60,40,20,0.14);
+      --radius: 16px; --radius-sm: 10px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(253,248,242,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--sand); padding: 0 6vw; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .nav-logo { font-family: 'Lora', serif; font-size: 1.4rem; font-weight: 600; color: var(--brown-dark); text-decoration: none; letter-spacing: -0.02em; }
+    .nav-logo span { color: var(--terracotta); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav-links a { text-decoration: none; font-size: 0.92rem; font-weight: 500; color: var(--text-muted); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+    .nav-links a.active { font-weight: 600; color: var(--terracotta); }
+    .nav-cta { background: var(--terracotta) !important; color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 8px; font-weight: 600 !important; transition: background 0.2s, transform 0.15s !important; }
+    .nav-cta:hover { background: #B05530 !important; transform: translateY(-1px); }
+
+    /* PAGE HERO */
+    .page-hero { padding: 5rem 6vw 3.5rem; text-align: center; position: relative; overflow: hidden; }
+    .page-hero-blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.35; pointer-events: none; }
+    .blob-a { width: 460px; height: 460px; background: var(--terracotta-light); top: -120px; right: -60px; }
+    .blob-b { width: 300px; height: 300px; background: var(--sage-light); bottom: -80px; left: -40px; }
+    .section-label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--terracotta); margin-bottom: 0.8rem; }
+    .page-hero h1 { font-family: 'Lora', serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.03em; color: var(--brown-dark); max-width: 760px; margin: 0 auto 1.2rem; }
+    .page-hero h1 em { color: var(--terracotta); font-style: italic; }
+    .page-hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 540px; margin: 0 auto; }
+
+    /* FEATURE SPOTLIGHT */
+    .spotlight { padding: 5rem 6vw; }
+    .spotlight-row { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-bottom: 6rem; }
+    .spotlight-row.reverse { direction: rtl; }
+    .spotlight-row.reverse > * { direction: ltr; }
+    .spotlight-text .tag { display: inline-block; background: var(--terracotta-pale); color: var(--terracotta); font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+    .spotlight-text h2 { font-family: 'Lora', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600; color: var(--brown-dark); line-height: 1.25; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .spotlight-text h2 em { color: var(--terracotta); font-style: italic; }
+    .spotlight-text p { font-size: 0.97rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.4rem; }
+    .check-list { list-style: none; }
+    .check-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.92rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .check-list li::before { content: '✓'; width: 20px; height: 20px; border-radius: 50%; background: var(--sage-pale); color: var(--sage); font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+    /* VISUAL CARDS for spotlight */
+    .spotlight-visual { background: var(--white); border: 1px solid var(--sand); border-radius: 20px; padding: 2rem; box-shadow: var(--shadow); }
+    .vis-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.4rem; }
+    .vis-title { font-family: 'Lora', serif; font-size: 0.95rem; font-weight: 600; color: var(--brown-dark); }
+    .vis-badge { font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 100px; background: var(--sage-pale); color: var(--sage); }
+
+    .task-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; background: var(--cream); border: 1px solid var(--sand); margin-bottom: 8px; }
+    .task-cb { width: 17px; height: 17px; border-radius: 4px; border: 1.5px solid var(--sand); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .task-cb.done { background: var(--sage); border-color: var(--sage); color: white; font-size: 0.6rem; font-weight: 700; }
+    .task-label { flex: 1; font-size: 0.83rem; color: var(--text-main); }
+    .task-label.done { text-decoration: line-through; color: var(--text-light); }
+    .task-chip { font-size: 0.68rem; font-weight: 600; padding: 2px 8px; border-radius: 100px; }
+    .chip-tc { background: var(--terracotta-pale); color: var(--terracotta); }
+    .chip-sg { background: var(--sage-pale); color: var(--sage); }
+    .chip-am { background: #FEF3DC; color: #9B7120; }
+
+    .ai-box { margin-top: 14px; background: var(--terracotta-pale); border-radius: 10px; padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; }
+    .ai-box-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .ai-box-text { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+    .ai-box-text strong { color: var(--terracotta); font-weight: 600; }
+
+    .collab-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--cream-dark); }
+    .collab-av { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: white; flex-shrink: 0; }
+    .collab-msg { flex: 1; font-size: 0.82rem; color: var(--text-muted); }
+    .collab-msg strong { color: var(--text-main); }
+    .collab-time { font-size: 0.72rem; color: var(--text-light); }
+
+    .metric-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    .metric-box { background: var(--cream); border: 1px solid var(--sand); border-radius: 10px; padding: 12px; }
+    .metric-label { font-size: 0.72rem; color: var(--text-light); font-weight: 500; margin-bottom: 4px; }
+    .metric-val { font-size: 1.4rem; font-weight: 600; color: var(--brown-dark); }
+    .metric-change { font-size: 0.7rem; color: var(--sage); font-weight: 600; }
+    .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.78rem; color: var(--text-muted); }
+    .bar-track { flex: 1; height: 6px; background: var(--sand); border-radius: 3px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 3px; }
+
+    /* INTEGRATIONS GRID */
+    .integrations-section { background: var(--cream-dark); padding: 5rem 6vw; text-align: center; }
+    .integrations-section h2 { font-family: 'Lora', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 600; color: var(--brown-dark); margin-bottom: 0.8rem; }
+    .integrations-section p { color: var(--text-muted); font-size: 0.97rem; max-width: 480px; margin: 0 auto 3rem; }
+    .integrations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; max-width: 800px; margin: 0 auto; }
+    .integration-tile { background: var(--white); border: 1px solid var(--sand); border-radius: 14px; padding: 1.4rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: transform 0.2s, box-shadow 0.2s; cursor: default; }
+    .integration-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+    .int-icon { font-size: 1.8rem; }
+    .int-name { font-size: 0.78rem; font-weight: 600; color: var(--brown-dark); }
+
+    /* FEATURE GRID (small cards) */
+    .small-features { padding: 5rem 6vw; background: var(--white); }
+    .small-features h2 { font-family: 'Lora', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 600; color: var(--brown-dark); margin-bottom: 0.6rem; text-align: center; }
+    .small-features > p { text-align: center; color: var(--text-muted); margin-bottom: 3rem; }
+    .small-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; }
+    .small-card { background: var(--cream); border: 1px solid var(--sand); border-radius: var(--radius); padding: 1.6rem; transition: transform 0.2s, box-shadow 0.2s; }
+    .small-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+    .small-card-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+    .small-card h3 { font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; color: var(--brown-dark); margin-bottom: 0.4rem; }
+    .small-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* CTA */
+    .cta-strip { background: var(--brown-dark); padding: 5rem 6vw; text-align: center; position: relative; overflow: hidden; }
+    .cta-strip h2 { font-family: 'Lora', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 600; color: var(--cream); margin-bottom: 0.8rem; }
+    .cta-strip h2 em { color: var(--terracotta-light); font-style: italic; }
+    .cta-strip p { color: var(--sand); margin-bottom: 2.2rem; font-size: 1rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-white { background: var(--cream); color: var(--brown-dark); border: none; padding: 0.85rem 2rem; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+    .btn-ghost { background: transparent; color: var(--cream); border: 1.5px solid rgba(255,255,255,0.3); padding: 0.85rem 2rem; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.7); }
+
+    /* FOOTER */
+    footer { background: var(--brown-dark); border-top: 1px solid rgba(255,255,255,0.07); padding: 4rem 6vw 2.5rem; color: var(--sand); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand p { font-size: 0.88rem; color: var(--text-light); margin-top: 0.8rem; line-height: 1.6; max-width: 260px; }
+    .footer-col h4 { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--cream); margin-bottom: 1rem; }
+    .footer-col a { display: block; font-size: 0.88rem; color: var(--text-light); text-decoration: none; margin-bottom: 0.5rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--cream); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--text-light); flex-wrap: wrap; gap: 0.5rem; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .spotlight-row { grid-template-columns: 1fr; gap: 2.5rem; }
+      .spotlight-row.reverse { direction: ltr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Mind<span>Fold</span></a>
+  <ul class="nav-links">
+    <li><a href="features.html" class="active">Features</a></li>
+    <li><a href="how-it-works.html">How it works</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="get-started.html" class="nav-cta">Get started free</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-blob blob-a"></div>
+  <div class="page-hero-blob blob-b"></div>
+  <p class="section-label">Features</p>
+  <h1>Built for the way <em>real teams</em> actually work</h1>
+  <p>Every feature in MindFold was designed to reduce friction, not add it. Here's what's waiting for you.</p>
+</section>
+
+<!-- SPOTLIGHT 1: TASK MANAGEMENT -->
+<section class="spotlight">
+  <div class="spotlight-row reveal">
+    <div class="spotlight-text">
+      <span class="tag">Task management</span>
+      <h2>Tasks that <em>organise themselves</em></h2>
+      <p>Create tasks in plain language, assign them instantly, and watch MindFold sort them into the right projects, priorities, and timelines — no manual filing needed.</p>
+      <ul class="check-list">
+        <li>AI auto-prioritisation based on deadlines and workload</li>
+        <li>Drag-and-drop kanban, list, and timeline views</li>
+        <li>Recurring tasks, subtasks, and dependencies</li>
+        <li>Smart due-date nudges before things go overdue</li>
+      </ul>
+    </div>
+    <div class="spotlight-visual">
+      <div class="vis-header">
+        <span class="vis-title">Today's tasks</span>
+        <span class="vis-badge">4 of 6 done</span>
+      </div>
+      <div class="task-item">
+        <div class="task-cb done">✓</div>
+        <span class="task-label done">Finalise Q3 report slides</span>
+        <span class="task-chip chip-tc">Design</span>
+      </div>
+      <div class="task-item">
+        <div class="task-cb done">✓</div>
+        <span class="task-label done">Review API integration docs</span>
+        <span class="task-chip chip-sg">Dev</span>
+      </div>
+      <div class="task-item">
+        <div class="task-cb done">✓</div>
+        <span class="task-label done">Update onboarding email copy</span>
+        <span class="task-chip chip-am">Growth</span>
+      </div>
+      <div class="task-item">
+        <div class="task-cb done">✓</div>
+        <span class="task-label done">Weekly sync — design team</span>
+        <span class="task-chip chip-tc">Collab</span>
+      </div>
+      <div class="task-item">
+        <div class="task-cb"></div>
+        <span class="task-label">Ship v2.1 to staging</span>
+        <span class="task-chip chip-sg">Dev</span>
+      </div>
+      <div class="task-item">
+        <div class="task-cb"></div>
+        <span class="task-label">Prepare investor slide deck</span>
+        <span class="task-chip chip-am">Growth</span>
+      </div>
+      <div class="ai-box">
+        <span class="ai-box-icon">🧠</span>
+        <div class="ai-box-text"><strong>AI tip:</strong> "Ship v2.1" is blocked by 2 open dev tasks. Move it to tomorrow for a clean focus block.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPOTLIGHT 2: COLLABORATION -->
+  <div class="spotlight-row reverse reveal">
+    <div class="spotlight-text">
+      <span class="tag">Collaboration</span>
+      <h2>Your whole team, <em>in sync</em></h2>
+      <p>Comment, mention, and react right inside tasks. No more switching to Slack to ask about a ticket — context lives exactly where the work does.</p>
+      <ul class="check-list">
+        <li>Threaded comments on every task and project</li>
+        <li>@mentions with instant notifications</li>
+        <li>Shared team inbox for quick triage</li>
+        <li>Guest access for clients and contractors</li>
+      </ul>
+    </div>
+    <div class="spotlight-visual">
+      <div class="vis-header">
+        <span class="vis-title">Activity — Investor deck</span>
+        <span class="vis-badge">3 members</span>
+      </div>
+      <div class="collab-row">
+        <div class="collab-av" style="background:#C4613A;">SM</div>
+        <div class="collab-msg"><strong>Sarah</strong> uploaded "deck-v3.pdf" and tagged it ready for review.</div>
+        <span class="collab-time">9:12am</span>
+      </div>
+      <div class="collab-row">
+        <div class="collab-av" style="background:#5A7A5C;">JK</div>
+        <div class="collab-msg"><strong>James</strong> added a comment: "Slide 4 needs updated ARR numbers."</div>
+        <span class="collab-time">9:34am</span>
+      </div>
+      <div class="collab-row">
+        <div class="collab-av" style="background:#7A5C8A;">RP</div>
+        <div class="collab-msg"><strong>Rita</strong> resolved James's comment and marked slide 4 done ✓</div>
+        <span class="collab-time">10:01am</span>
+      </div>
+      <div class="collab-row">
+        <div class="collab-av" style="background:#B58B52;">AL</div>
+        <div class="collab-msg"><strong>Alex</strong> moved the task to <em>Ready to send</em> stage.</div>
+        <span class="collab-time">10:15am</span>
+      </div>
+      <div style="margin-top:14px; display:flex; gap:8px; align-items:center;">
+        <input type="text" placeholder="Add a comment…" style="flex:1; padding:8px 12px; border-radius:8px; border:1px solid var(--sand); background:var(--cream); font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-main); outline:none;" />
+        <button style="background:var(--terracotta); color:white; border:none; border-radius:8px; padding:8px 14px; font-size:0.82rem; font-weight:600; cursor:pointer;">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPOTLIGHT 3: ANALYTICS -->
+  <div class="spotlight-row reveal">
+    <div class="spotlight-text">
+      <span class="tag">Analytics</span>
+      <h2>Progress you can <em>actually see</em></h2>
+      <p>Live dashboards give every team member and manager a clear view of what's shipping, what's stuck, and where to focus next — no spreadsheets needed.</p>
+      <ul class="check-list">
+        <li>Team velocity and sprint completion rates</li>
+        <li>Individual and project-level focus time tracking</li>
+        <li>Blocker detection and bottleneck alerts</li>
+        <li>Weekly digest emailed automatically every Monday</li>
+      </ul>
+    </div>
+    <div class="spotlight-visual">
+      <div class="vis-header">
+        <span class="vis-title">Team dashboard</span>
+        <span class="vis-badge">This week</span>
+      </div>
+      <div class="metric-row">
+        <div class="metric-box">
+          <div class="metric-label">Velocity</div>
+          <div class="metric-val">94%</div>
+          <div class="metric-change">↑ 6% vs last week</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Tasks shipped</div>
+          <div class="metric-val">47</div>
+          <div class="metric-change">↑ 12 from last week</div>
+        </div>
+      </div>
+      <div style="margin-bottom:10px; font-size:0.78rem; font-weight:600; color:var(--text-light); text-transform:uppercase; letter-spacing:0.05em;">Projects by completion</div>
+      <div class="bar-row">
+        <span style="width:110px; flex-shrink:0;">Product launch</span>
+        <div class="bar-track"><div class="bar-fill" style="width:80%; background:var(--terracotta);"></div></div>
+        <span style="width:28px; text-align:right;">80%</span>
+      </div>
+      <div class="bar-row">
+        <span style="width:110px; flex-shrink:0;">Infra upgrade</span>
+        <div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--sage);"></div></div>
+        <span style="width:28px; text-align:right;">100%</span>
+      </div>
+      <div class="bar-row">
+        <span style="width:110px; flex-shrink:0;">Content plan</span>
+        <div class="bar-track"><div class="bar-fill" style="width:60%; background:#B58B52;"></div></div>
+        <span style="width:28px; text-align:right;">60%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section class="integrations-section">
+  <div class="reveal">
+    <p class="section-label" style="text-align:center;">Integrations</p>
+    <h2>Works with the tools you already love</h2>
+    <p>MindFold connects to your stack in minutes. No disruption, no migration headaches.</p>
+  </div>
+  <div class="integrations-grid reveal">
+    <div class="integration-tile"><span class="int-icon">💬</span><span class="int-name">Slack</span></div>
+    <div class="integration-tile"><span class="int-icon">🐙</span><span class="int-name">GitHub</span></div>
+    <div class="integration-tile"><span class="int-icon">📄</span><span class="int-name">Notion</span></div>
+    <div class="integration-tile"><span class="int-icon">📅</span><span class="int-name">Google Calendar</span></div>
+    <div class="integration-tile"><span class="int-icon">📊</span><span class="int-name">Google Sheets</span></div>
+    <div class="integration-tile"><span class="int-icon">🔷</span><span class="int-name">Jira</span></div>
+    <div class="integration-tile"><span class="int-icon">📧</span><span class="int-name">Gmail</span></div>
+    <div class="integration-tile"><span class="int-icon">🔗</span><span class="int-name">Zapier</span></div>
+  </div>
+</section>
+
+<!-- SMALL FEATURE GRID -->
+<section class="small-features">
+  <div class="reveal">
+    <p class="section-label" style="text-align:center;">And much more</p>
+    <h2>Every detail, thoughtfully designed</h2>
+    <p>A handful of smaller features that make a big difference every day.</p>
+  </div>
+  <div class="small-grid reveal">
+    <div class="small-card"><div class="small-card-icon">🔔</div><h3>Smart notifications</h3><p>Only get notified when it actually matters. MindFold filters the noise intelligently.</p></div>
+    <div class="small-card"><div class="small-card-icon">🌙</div><h3>Focus mode</h3><p>Block distractions and enter a calm, minimal workspace for deep work sessions.</p></div>
+    <div class="small-card"><div class="small-card-icon">📱</div><h3>Mobile app</h3><p>Full-featured iOS and Android apps so your team stays in sync wherever they are.</p></div>
+    <div class="small-card"><div class="small-card-icon">🔍</div><h3>Universal search</h3><p>Find any task, comment, file, or person instantly across your entire workspace.</p></div>
+    <div class="small-card"><div class="small-card-icon">🗓️</div><h3>Calendar view</h3><p>See all tasks and deadlines laid out across the week or month at a glance.</p></div>
+    <div class="small-card"><div class="small-card-icon">🔒</div><h3>Granular permissions</h3><p>Control exactly who can see, edit, or manage every project and workspace.</p></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <div class="reveal">
+    <h2>See every feature <em>in action</em></h2>
+    <p>Try MindFold free for 14 days. No credit card required.</p>
+    <div class="cta-btns">
+      <a href="get-started.html" class="btn-white">Start for free</a>
+      <a href="how-it-works.html" class="btn-ghost">See how it works →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="font-family:'Lora',serif; font-size:1.25rem; font-weight:600; color:var(--cream);">Mind<span style="color:var(--terracotta-light);">Fold</span></div>
+      <p>Productivity software built around how people actually work — thoughtfully human, refreshingly simple.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="#">Integrations</a>
+      <a href="#">Changelog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About us</a>
+      <a href="#">Blog</a>
+      <a href="#">Careers</a>
+      <a href="#">Press</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="#">Help center</a>
+      <a href="#">Contact us</a>
+      <a href="#">Privacy policy</a>
+      <a href="#">Terms of service</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 MindFold. All rights reserved.</span>
+    <span>Made with care ☕</span>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (i % 3) * 0.1 + 's';
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
